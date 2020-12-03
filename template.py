@@ -3,9 +3,9 @@ import collections
 import itertools
 import math
 import random
-# from grid import dirscardinal as dirs
-# from grid import dirsnatural as dirs
-# from grid import dirsdigital as dirs
+# from grid import gridcardinal as grid
+# from grid import gridnatural as grid
+# from grid import griddigital as grid
 
 verbose = False
 verbose = True
