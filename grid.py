@@ -9,12 +9,12 @@ def addvec(a, b):
     """
     return tuple(x+y for x,y in zip(a,b))
 
-def indexgrid(grid, vec):
+def index(grid, vec):
     """
     Most obvious use case (hence name 'grid') is 2d, but works for n-dimensional case too
 
     >>> g = [['a', 'b'], ['c', 'd']]
-    >>> indexgrid(g, [1, 0])
+    >>> index(g, [1, 0])
     'c'
     """
     for x in vec:
@@ -24,7 +24,7 @@ def indexgrid(grid, vec):
 
 # TODO how do i DRY this out?
 
-class dirscardinal:
+class gridcardinal:
     lst = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     tovec = {
         'E': (0, 1),
@@ -47,9 +47,9 @@ class dirscardinal:
         else:
             raise Exception("invalid rotation direction: " + rotation)
     addvec = addvec
-    indexgrid = indexgrid
+    index = index
 
-class dirsnatural:
+class gridnatural:
     lst = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     tovec = {
         'R': (0, 1),
@@ -72,9 +72,9 @@ class dirsnatural:
         else:
             raise Exception("invalid rotation direction: " + rotation)
     addvec = addvec
-    indexgrid = indexgrid
+    index = index
 
-class dirsdigital:
+class griddigital:
     lst = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     tovec = {
         'R': (0, 1),
@@ -97,4 +97,4 @@ class dirsdigital:
         else:
             raise Exception("invalid rotation direction: " + rotation)
     addvec = addvec
-    indexgrid = indexgrid
+    index = index
