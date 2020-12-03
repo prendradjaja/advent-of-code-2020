@@ -21,6 +21,9 @@ def index(grid, vec):
         grid = grid[x]
     return grid
 
+def absmanhattan(vec):
+    return sum(abs(x) for x in vec)
+
 
 # TODO how do i DRY this out?
 
@@ -48,6 +51,7 @@ class gridcardinal:
             raise Exception("invalid rotation direction: " + rotation)
     addvec = addvec
     index = index
+    absmanhattan = absmanhattan
 
 class gridnatural:
     lst = [(0, 1), (1, 0), (0, -1), (-1, 0)]
@@ -73,6 +77,7 @@ class gridnatural:
             raise Exception("invalid rotation direction: " + rotation)
     addvec = addvec
     index = index
+    absmanhattan = absmanhattan
 
 class griddigital:
     lst = [(0, 1), (1, 0), (0, -1), (-1, 0)]
@@ -98,3 +103,4 @@ class griddigital:
             raise Exception("invalid rotation direction: " + rotation)
     addvec = addvec
     index = index
+    absmanhattan = absmanhattan
