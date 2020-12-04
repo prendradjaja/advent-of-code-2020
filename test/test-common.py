@@ -30,6 +30,16 @@ class TestCommon(unittest.TestCase):
         self.assertEqual(6, grid.index(g2d, [1, 2]))
         self.assertEqual(6, grid.index(g3d, [0, 1, 2]))
 
+    def test_setindex(self):
+        g2d = [ [1, 2, 3],
+                [4, 5, 6],
+                [7, 8, 9], ]
+        g3d = [g2d]
+        grid.setindex(g2d, [1, 2], 0)
+        self.assertEqual(0, grid.index(g2d, [1, 2]))
+        grid.setindex(g3d, [0, 1, 2], -1)
+        self.assertEqual(-1, grid.index(g3d, [0, 1, 2]))
+
     def test_absmanhattan(self):
         self.assertEqual(5, grid.absmanhattan([2, 3]))
         self.assertEqual(5, grid.absmanhattan([-2, 3]))

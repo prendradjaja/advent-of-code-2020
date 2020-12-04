@@ -30,15 +30,21 @@ def make_grid_class(names, rotdir):
         def addvec(a, b):
             return tuple(x+y for x,y in zip(a,b))
 
-        @staticmethod # TODO At what point should I just use numpy?
-        def mulvec(vec, s):
+        @staticmethod
+        def mulvec(vec, s): # TODO At what point should I just use numpy?
             return tuple(x*s for x in vec)
 
         @staticmethod
-        def index(mygrid, vec):
+        def index(mygrid, vec): # In STL: operator.itemgetter
             for x in vec:
                 mygrid = mygrid[x]
             return mygrid
+
+        @staticmethod
+        def setindex(mygrid, vec, value): # TODO untested
+            for x in vec[:-1]:
+                mygrid = mygrid[x]
+            mygrid[vec[-1]] = value
 
         @staticmethod
         def absmanhattan(vec):
