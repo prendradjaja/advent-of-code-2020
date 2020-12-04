@@ -1,6 +1,6 @@
 import fileinput, collections, itertools, math, random
 import re
-from grid import gridsource as grid, make_grid_class # *, gridsource, gridcardinal, gridplane
+# from grid import gridsource as grid, make_grid_class # *, gridsource, gridcardinal, gridplane
 verbose = False
 verbose = True
 def log(*args, **kwargs):
