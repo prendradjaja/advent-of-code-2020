@@ -1,0 +1,3 @@
+Two mistakes
+- Initially wanted to refac out a func to calculate wrapping paper for each pres -- no need
+- Initially tried to be too clever using itertools.combinations instead of just a=l*w;b=...

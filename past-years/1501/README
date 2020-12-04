@@ -1,0 +1,3 @@
+Two mistakes:
+- Used Vim for part 1 -- it's nontrivial, so probably any benefit I gain from speed for part 1 I lose (and then some) in reimplementation for part 2
+- Off-by-one -- part 2 was 1-indexed, not 0-indexed
