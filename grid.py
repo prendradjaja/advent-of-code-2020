@@ -1,5 +1,4 @@
 """ Most obvious is 2D, but works for arbitrary dimensions """
-
 def _make_grid_class(names, rotdir):
     class clazz:
         dirs = [(0, 1), (1, 0), (0, -1), (-1, 0)]
@@ -8,8 +7,7 @@ def _make_grid_class(names, rotdir):
         neighborvecs = neivecs = [
             (-1, -1), (-1, 0), (-1, 1),
             (0, -1),           (0, 1),
-            (1, -1),  (1, 0),  (1, 1)
-        ]
+            (1, -1),  (1, 0),  (1, 1) ]
 
         @staticmethod
         def rot(direction, rotation):
