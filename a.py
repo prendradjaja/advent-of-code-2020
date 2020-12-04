@@ -6,7 +6,8 @@ def log(*args, **kwargs):
     if verbose: print(*args, **kwargs)
 
 def main():
-    for line in fileinput.input():
+    f = open(sys.argv[1])
+    for line in f:
         line = line.strip()
 
 if __name__ == '__main__' and not sys.flags.inspect: main()
