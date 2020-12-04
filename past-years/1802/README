@@ -1,0 +1,8 @@
+mistake: forgot .strip() when switching from
+
+for line in f:
+    line = line.strip()
+
+to
+
+boxes = [l.strip() for l in f]
