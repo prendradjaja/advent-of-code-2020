@@ -10,8 +10,3 @@ python3 test-1601a.py
 python3 test-1602a.py
 python3 test-1903a.py
 python3 test-1903b.py
-
-echo
-runwithname test-util.py
-echo
-python3 -m doctest util.py && echo OK util.py doctests
