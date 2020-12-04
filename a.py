@@ -1,4 +1,4 @@
-import fileinput, collections, itertools, math, random, sys, re
+import fileinput, collections, collections as cl, itertools, math, random, sys, re
 from grid import gridsource as grid, make_grid_class # *, gridsource, gridcardinal, gridplane
 verbose = False
 verbose = True
