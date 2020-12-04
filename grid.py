@@ -1,5 +1,12 @@
-""" Most obvious is 2D, but works for arbitrary dimensions """
+""" Many of these methods work for n dimensions """
 def make_grid_class(names, rotdir):
+    """
+    names: e.g. RDLU corresponding to `dirs` below
+    rotdir: Going forward in `names` (e.g. RDLU -- R to D) is a...
+      - right turn: 1
+      - left turn: -1
+    """
+
     class clazz:
         dirs = [(0, 1), (1, 0), (0, -1), (-1, 0)]
         tovec = { names[i]: vec for (i, vec) in enumerate(dirs) }
@@ -44,6 +51,6 @@ def make_grid_class(names, rotdir):
 
     return clazz
 
-gridcardinal = make_grid_class('ENWS', -1)
-gridnatural = make_grid_class('RULD', -1)
-griddigital = make_grid_class('RULD', 1)
+gridsource = make_grid_class('RDLU', 1)    # (y, x)! For working with array in source code
+gridcardinal = make_grid_class('ESWN', 1)  # (y, x)! For working with array in source code, but using cardinal directions instead of RDLU
+gridcartesian = make_grid_class('URDL', 1) # (x, y)  For working with the usual Cartesian plane
