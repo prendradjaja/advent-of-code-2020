@@ -10,6 +10,16 @@ def make_grid_class(names, rotdir):
             (1, -1),  (1, 0),  (1, 1) ]
 
         @staticmethod
+        def move(pos, direction, n):
+            unitvec = clazz.tovec[direction] if isinstance(direction, str) else direction
+            vec = clazz.mulvec(unitvec, n)
+            return clazz.addvec(pos, vec)
+
+        @staticmethod
+        def move1(pos, direction):
+            return clazz.move(pos, direction, 1)
+
+        @staticmethod
         def addvec(a, b):
             return tuple(x+y for x,y in zip(a,b))
 
