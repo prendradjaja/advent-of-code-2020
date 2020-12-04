@@ -6,4 +6,4 @@ def log(*args, **kwargs):
     if verbose: print(*args, **kwargs)
 
 for line in fileinput.input():
-    pass
+    line = line.strip()
