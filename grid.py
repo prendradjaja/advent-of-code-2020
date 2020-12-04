@@ -1,106 +1,35 @@
-def addvec(a, b):
-    """
-    Most obvious use case is 2d, but works for n-dimensional case too
+""" Most obvious is 2D, but works for arbitrary dimensions """
 
-    >>> addvec((1, 2), (10, 20))
-    (11, 22)
-    >>> addvec((1, 2, 3), (10, 20, 30))
-    (11, 22, 33)
-    """
-    return tuple(x+y for x,y in zip(a,b))
+def _make_grid_class(names, rotdir):
+    class clazz:
+        lst = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+        tovec = { names[i]: vec for (i, vec) in enumerate(lst) }
+        toname = { vec: names[i] for (i, vec) in enumerate(lst) }
 
-def index(grid, vec):
-    """
-    Most obvious use case (hence name 'grid') is 2d, but works for n-dimensional case too
+        @staticmethod
+        def rot(direction, rotation):
+            if rotation == 'R':
+                return self.lst[(self.lst.index(d) + rotdir) % 4]
+            elif rotation == 'L':
+                return self.lst[(self.lst.index(d) - rotdir) % 4]
+            else:
+                raise Exception("invalid rotation direction: " + rotation)
 
-    >>> g = [['a', 'b'], ['c', 'd']]
-    >>> index(g, [1, 0])
-    'c'
-    """
-    for x in vec:
-        grid = grid[x]
-    return grid
+        @staticmethod
+        def addvec(a, b):
+            return tuple(x+y for x,y in zip(a,b))
 
-def absmanhattan(vec):
-    return sum(abs(x) for x in vec)
+        @staticmethod
+        def index(mygrid, vec):
+            for x in vec:
+                mygrid = mygrid[x]
+            return mygrid
 
+        @staticmethod
+        def absmanhattan(vec):
+            return sum(abs(x) for x in vec)
+    return clazz
 
-# TODO how do i DRY this out?
-
-class gridcardinal:
-    lst = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-    tovec = {
-        'E': (0, 1),
-        'N': (1, 0),
-        'W': (0, -1),
-        'S': (-1, 0),
-    }
-    toname = {
-        (0, 1):  'E',
-        (1, 0):  'N',
-        (0, -1): 'W',
-        (-1, 0): 'S',
-    }
-    @staticmethod
-    def rot(direction, rotation):
-        if rotation == 'R':
-            return self.lst[(self.lst.index(d) - 1) % 4]
-        elif rotation == 'L':
-            return self.lst[(self.lst.index(d) + 1) % 4]
-        else:
-            raise Exception("invalid rotation direction: " + rotation)
-    addvec = addvec
-    index = index
-    absmanhattan = absmanhattan
-
-class gridnatural:
-    lst = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-    tovec = {
-        'R': (0, 1),
-        'U': (1, 0),
-        'L': (0, -1),
-        'D': (-1, 0),
-    }
-    toname = {
-        (0, 1):  'R',
-        (1, 0):  'U',
-        (0, -1): 'L',
-        (-1, 0): 'D',
-    }
-    @staticmethod
-    def rot(direction, rotation):
-        if rotation == 'R':
-            return self.lst[(self.lst.index(d) - 1) % 4]
-        elif rotation == 'L':
-            return self.lst[(self.lst.index(d) + 1) % 4]
-        else:
-            raise Exception("invalid rotation direction: " + rotation)
-    addvec = addvec
-    index = index
-    absmanhattan = absmanhattan
-
-class griddigital:
-    lst = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-    tovec = {
-        'R': (0, 1),
-        'D': (1, 0),
-        'L': (0, -1),
-        'U': (-1, 0),
-    }
-    toname = {
-        (0, 1):  'R',
-        (1, 0):  'D',
-        (0, -1): 'L',
-        (-1, 0): 'U',
-    }
-    @staticmethod
-    def rot(direction, rotation):
-        if rotation == 'R':
-            return self.lst[(self.lst.index(d) + 1) % 4]
-        elif rotation == 'L':
-            return self.lst[(self.lst.index(d) - 1) % 4]
-        else:
-            raise Exception("invalid rotation direction: " + rotation)
-    addvec = addvec
-    index = index
-    absmanhattan = absmanhattan
+gridcardinal = _make_grid_class('ENWS', -1)
+gridnatural = _make_grid_class('RULD', -1)
+griddigital = _make_grid_class('RULD', 1)
