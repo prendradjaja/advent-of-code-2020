@@ -10,20 +10,10 @@ def _make_grid_class(names, rotdir):
             (1, -1),  (1, 0),  (1, 1) ]
 
         @staticmethod
-        def rot(direction, rotation):
-            if rotation == 'R':
-                return self.dirs[(self.dirs.index(d) + rotdir) % 4]
-            elif rotation == 'L':
-                return self.dirs[(self.dirs.index(d) - rotdir) % 4]
-            else:
-                raise Exception("invalid rotation direction: " + rotation)
-
-        @staticmethod
         def addvec(a, b):
             return tuple(x+y for x,y in zip(a,b))
 
-        # TODO At what point should I just not reinvent numpy?
-        @staticmethod
+        @staticmethod # TODO At what point should I just use numpy?
         def mulvec(vec, s):
             return tuple(x*s for x in vec)
 
@@ -36,6 +26,12 @@ def _make_grid_class(names, rotdir):
         @staticmethod
         def absmanhattan(vec):
             return sum(abs(x) for x in vec)
+
+        @staticmethod
+        def rot(direction, rotation):
+            assert rotation in ['L', 'R']
+            return self.dirs[(self.dirs.index(d) + (rotdir if rotation == 'R' else -rotdir)) % 4]
+
     return clazz
 
 gridcardinal = _make_grid_class('ENWS', -1)
