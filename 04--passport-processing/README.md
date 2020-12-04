@@ -10,13 +10,15 @@ I got tripped up in a few places:
    * Declaring functions before using them: I think next time I'll use a `main` function :)
 * [The Last Line Effect](https://www.viva64.com/en/b/0260/) in copy-paste code! Not actually the last line this time, but it's so easy to make a mistake like this one: (how fast can you spot it?)
 
-    def h(v):
-        if 'cm' in v:
-            n, r = v.split('cm', maxsplit=1)
-            return r == '' and 150 <= int(n) <= 193
-        if 'cm' in v:
-            n, r = v.split('in', maxsplit=1)
-            return r == '' and 59 <= int(n) <= 76
-        return False
+```python
+def h(v):
+    if 'cm' in v:
+        n, r = v.split('cm', maxsplit=1)
+        return r == '' and 150 <= int(n) <= 193
+    if 'cm' in v:
+        n, r = v.split('in', maxsplit=1)
+        return r == '' and 59 <= int(n) <= 76
+    return False
+```
 
 That was the biggest (time-wise) mistake I made on part 2 -- had to try against `valid-examples.txt` and do some debugging. (You can see log calls in `b.py`!)
