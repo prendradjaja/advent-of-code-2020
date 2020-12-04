@@ -51,6 +51,6 @@ def make_grid_class(names, rotdir):
 
     return clazz
 
-gridsource = make_grid_class('RDLU', 1)    # (y, x)! For working with array in source code
+gridsource   = make_grid_class('RDLU', 1)  # (y, x)! For working with array in source code
 gridcardinal = make_grid_class('ESWN', 1)  # (y, x)! For working with array in source code, but using cardinal directions instead of RDLU
-gridcartesian = make_grid_class('URDL', 1) # (x, y)  For working with the usual Cartesian plane
+gridplane    = make_grid_class('URDL', 1)  # (x, y)  For working with the usual Cartesian plane

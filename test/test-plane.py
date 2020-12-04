@@ -1,8 +1,8 @@
 import unittest
-from grid import gridcartesian as grid
+from grid import gridplane as grid
 from examples import g, gcart
 
-class TestCartesian(unittest.TestCase):
+class TestPlane(unittest.TestCase):
 
     def test_move_by_name(self):
         pos = (0, 0)
