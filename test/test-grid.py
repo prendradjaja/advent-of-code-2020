@@ -32,7 +32,7 @@ class TestCommon(unittest.TestCase):
         self.assertEqual(5, digital.absmanhattan([-2, 3]))
         self.assertEqual(5, digital.absmanhattan([-1, 1, 3]))
 
-source = make_grid_class('RDLU', 1)
+source = make_grid_class('RDLU', 1)  # For working with array in source code
 g = [
   'o.........',
   '.b.c......',
