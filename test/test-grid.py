@@ -5,11 +5,12 @@ source = make_grid_class('RDLU', 1)  # For working with array in source code
 cardinal = make_grid_class('ESWN', 1)  # For working with array in source code
 g = [
   'o.........',
-  '.b.c......',
+  '.b........',
   '..........',
   '..a.......',
   '..........',
 ]
+
 
 class TestCommon(unittest.TestCase):
 
