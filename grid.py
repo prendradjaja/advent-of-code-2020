@@ -30,10 +30,10 @@ def make_grid_class(names, rotdir):
         @staticmethod
         def rot(direction, rotation):
             assert rotation in ['L', 'R']
-            return self.dirs[(self.dirs.index(d) + (rotdir if rotation == 'R' else -rotdir)) % 4]
+            return clazz.dirs[(clazz.dirs.index(direction) + (rotdir if rotation == 'R' else -rotdir)) % 4]
 
     return clazz
 
-gridcardinal = _make_grid_class('ENWS', -1)
-gridnatural = _make_grid_class('RULD', -1)
-griddigital = _make_grid_class('RULD', 1)
+gridcardinal = make_grid_class('ENWS', -1)
+gridnatural = make_grid_class('RULD', -1)
+griddigital = make_grid_class('RULD', 1)
