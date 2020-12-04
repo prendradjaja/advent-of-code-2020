@@ -1,6 +1,6 @@
 import fileinput, collections, itertools, math, random
-# from grid import griddigital as grid
-from grid import make_grid_class
+from grid import gridsource as grid
+# from grid import make_grid_class
 # *, gridnatural, gridcardinal, griddigital
 verbose = False
 verbose = True
@@ -9,7 +9,7 @@ def log(*args, **kwargs):
 
 seen = set()
 
-grid = make_grid_class('RDLU', 1)
+# grid = make_grid_class('RDLU', 1)
 
 f = [line.strip() for line in fileinput.input()]
 

@@ -1,6 +1,6 @@
 import fileinput, collections, itertools, math, random
-# from grid import griddigital as grid
-from grid import make_grid_class
+from grid import gridsource as grid
+# from grid import make_grid_class
 # *, gridnatural, gridcardinal, griddigital
 verbose = False
 verbose = True
@@ -13,7 +13,7 @@ keypad = [
     [7,8,9,]
 ]
 
-grid = make_grid_class('RDLU', 1)  # rotdir arbitrary
+# grid = make_grid_class('RDLU', 1)  # rotdir arbitrary
 
 pos = (1, 1)
 

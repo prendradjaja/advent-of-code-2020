@@ -1,6 +1,6 @@
 import fileinput, collections, itertools, math, random
-# from grid import griddigital as grid
-from grid import make_grid_class
+from grid import gridsource as grid
+# from grid import make_grid_class
 # *, gridnatural, gridcardinal, griddigital
 verbose = False
 verbose = True
@@ -11,7 +11,7 @@ for line in fileinput.input():
     f = line.strip()
     break
 
-grid = make_grid_class('ABCD', 1)  # both arbitrary
+# grid = make_grid_class('ABCD', 1)  # both arbitrary
 
 pos = (0, 0)
 curdir = grid.dirs[0]
