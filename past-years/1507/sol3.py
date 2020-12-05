@@ -30,4 +30,19 @@ while lines:
         except NameError:
             pass
 
+# Fun fact: Initially, I had this whole program wrapped in a main()
+# function and this final line didn't work for an interesting
+# reason: (exec has some optional params, so maybe this can be made
+# to work, but in any case, this is the surprising moment I
+# encountered)
+#
+#     exec('a = 1')
+#     print(a)  # Works!
+#
+#     def main():
+#         exec('b = 1')
+#         exec('print(b)')  # Works!
+#         print(b)  # NameError
+#     main()
+
 print(var_a)
