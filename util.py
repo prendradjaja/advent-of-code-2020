@@ -32,5 +32,10 @@ def maybeint(s, mixedstring='error'):
                 return s
             elif mixedstring == 'int':
                 return int(re.search('[0-9]+', s).group(0))
+            else:
+                raise ValueError('Invalid value for mixedstring: ' + mixedstring)
     else:
         return s
+
+def findint(s):
+    return maybeint(s, 'int')
