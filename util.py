@@ -55,3 +55,5 @@ def consecutives(seq, n=2):
         if len(prevs) == n:
             yield tuple(prevs)
             prevs.pop(0)
+
+p = print
