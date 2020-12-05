@@ -1,5 +1,5 @@
 """ Many of these methods work for n dimensions """
-def make_grid_class(names, rotdir):
+def _make_grid_library(names, rotdir):
     """
     names: e.g. RDLU corresponding to `dirs` below
     rotdir: Going forward in `names` (e.g. RDLU -- R to D) is a...
@@ -7,7 +7,7 @@ def make_grid_class(names, rotdir):
       - left turn: -1
     """
 
-    class clazz:
+    class clazz:  # Not really a class -- can I use a module instead?
         dirs = [(0, 1), (1, 0), (0, -1), (-1, 0)]
         tovec = { names[i]: vec for (i, vec) in enumerate(dirs) }
         toname = { vec: names[i] for (i, vec) in enumerate(dirs) }
@@ -57,6 +57,7 @@ def make_grid_class(names, rotdir):
 
     return clazz
 
-gridsource   = make_grid_class('RDLU', 1)  # (y, x)! For working with array in source code
-gridcardinal = make_grid_class('ESWN', 1)  # (y, x)! For working with array in source code, but using cardinal directions instead of RDLU
-gridplane    = make_grid_class('URDL', 1)  # (x, y)  For working with the usual Cartesian plane
+gridsource   = _make_grid_library('RDLU', 1)  # (y, x)! For working with array in source code
+gridcardinal = _make_grid_library('ESWN', 1)  # (y, x)! For working with array in source code, but using cardinal directions instead of RDLU
+gridplane    = _make_grid_library('URDL', 1)  # (x, y)  For working with the usual Cartesian plane
+gridcustom = _make_grid_library

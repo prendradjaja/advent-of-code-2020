@@ -1,8 +1,8 @@
 import unittest
-from grid import make_grid_class
+from grid import gridcustom
 from examples import g, gcart
 
-grid = make_grid_class('ABCD', -1)
+grid = gridcustom('ABCD', -1)
 
 class TestCommon(unittest.TestCase):
 

@@ -1,5 +1,5 @@
 import fileinput, collections, collections as cl, itertools, math, random, sys, re
-from grid import gridsource as grid, make_grid_class # *, gridsource, gridcardinal, gridplane
+from grid import gridsource as grid, gridcustom # *, gridsource, gridcardinal, gridplane
 from util import *
 verbose = False
 verbose = True
