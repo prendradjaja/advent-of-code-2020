@@ -11,50 +11,40 @@ doubles = [x*2 for x in ascii_lowercase]
 taboos = ['ab', 'cd', 'pq', 'xy']
 
 def main():
-    # print(haspair2('elrlnndorggmmhmx'))
-    # exit()
+    print(isnice('qjhvhtzxzqqjkmpb'))
+    print(isnice('xxyxx'))
+    print(isnice('uurcxstgmygtbstg'))
+    print(isnice('ieodomkazucvgmuy'))
+
     f = open(sys.argv[1])
     nices = 0
     for line in f:
         line = line.strip()
-        if isnice2(line):
+        if isnice(line):
             nices += 1
     print(nices)
 
-def haspair(line):
-    for pair in consecutives(line):
-        pair = ''.join(pair)
-        foo = line.replace(pair, '')
-        if len(foo) <= len(line) - 4:
-            return True
-    return False
-def hassand(line):
-    for triple in consecutives(line, 3):
-        triple = ''.join(triple)
-        if triple[0] == triple[2]:
-            return True
-    return False
-
 def isnice(line):
-    return haspair(line) and hassand(line)
+    vows = list(c for c in line if c in 'aeiou')
+    hasdouble = any(d in line for d in doubles)
+    notaboo = all(t not in line for t in taboos)
+    return len(vows) >= 3 and hasdouble and notaboo
+    # return haspair(line) and hassand(line)
 
-def haspair2(line):
-    print(line, len(line))
+def haspair(line):
     for i in range(len(line) - 1):
         pair = line[i:i+2]
-        foo = line[:i] + '_' + line[i+2:]
-        print(i, pair, foo)
+        foo = line[:i] + line[i+2:]
         if pair in foo:
             return True
     return False
-def hassand2(line):
+
+def hassand(line):
     for i in range(len(line) - 2):
         triple = line[i:i+3]
         # print(triple)
         if triple[0] == triple[2]:
             return True
     return False
-def isnice2(line):
-    return haspair2(line) and hassand2(line)
 
 if __name__ == '__main__' and not sys.flags.inspect: main()

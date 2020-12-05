@@ -39,3 +39,19 @@ def maybeint(s, mixedstring='error'):
 
 def findint(s):
     return maybeint(s, 'int')
+
+def consecutives(seq, n=2):
+    """
+    >>> [''.join(t) for t in consecutives('abcd')]
+    ['ab', 'bc', 'cd']
+    >>> [''.join(t) for t in consecutives('abcd', 3)]
+    ['abc', 'bcd']
+    >>> [''.join(t) for t in consecutives('abcd', 5)]  # seq is too short
+    []
+    """
+    prevs = []
+    for item in seq:
+        prevs.append(item)
+        if len(prevs) == n:
+            yield tuple(prevs)
+            prevs.pop(0)
