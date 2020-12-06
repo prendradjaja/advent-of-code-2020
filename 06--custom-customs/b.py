@@ -14,6 +14,7 @@ def main():
         tot += len(intersection(*people))
     print(tot)
 
+# https://stackoverflow.com/a/2953343/1945088
 def intersection(first, *others):
     return set(first).intersection(*others)
 
