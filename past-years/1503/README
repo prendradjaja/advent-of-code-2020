@@ -1,8 +1,0 @@
-Two mistakes:
-- Started with
-    counts = collections.defaultdict(lambda: collections.defaultdict(int))
-  when I really just needed
-    counts = collections.defaultdict(int)
-- Didn't reset robosanta's position to (0, 0)
-
-got to use grid.py -- prob saved quite a few secs

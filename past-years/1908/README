@@ -1,9 +1,0 @@
-part 2 doesn't work :(
-
-mistake:
-    pixel == 0
-should've been
-    pixel == str(0)
-(or more idiomatically == '0')
-
-can debug against https://0xdf.gitlab.io/adventofcode2019/8 -- skip to the bottom for final code

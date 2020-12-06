@@ -1,7 +1,0 @@
-mistakes:
-- forgot to parse ints at first
-- mixed up x y w h (had x y h w initially) in namedtuple defn
-
-part 2 was interesting! to come back to...
-a few mistakes along the way
-- 
