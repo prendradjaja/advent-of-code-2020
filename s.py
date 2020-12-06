@@ -7,7 +7,7 @@ def log(*args, **kwargs):
     if verbose: print(*args, **kwargs)
 
 def main():
-    f = open(sys.argv[1] if sys.argv else 'in')
+    f = open(sys.argv[1] if len(sys.argv) > 1 else 'in')
     for line in f:
         line = line.strip()
 
