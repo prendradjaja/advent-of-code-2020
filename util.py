@@ -57,3 +57,11 @@ def consecutives(seq, n=2):
             prevs.pop(0)
 
 p = print
+
+def pfirst(*args, **kwargs):
+    if not pfirst.called:
+        pfirst.called = True
+        print(*args, **kwargs)
+    return args[0]
+pfirst.called = False
+pf = pfirst
