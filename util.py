@@ -70,6 +70,6 @@ def tee(*args, **kwargs):
 p = tee
 
 def tee_disableable(*args, **kwargs):
-    # print(*args, **kwargs) ############### can disable me by commenting out this line
+    print(*args, **kwargs) ############### can disable me by commenting out this line
     return args[0]
 p2 = tee_disableable
