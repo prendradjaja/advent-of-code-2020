@@ -56,8 +56,6 @@ def consecutives(seq, n=2):
             yield tuple(prevs)
             prevs.pop(0)
 
-p = print
-
 def pfirst(*args, **kwargs):
     if not pfirst.called:
         pfirst.called = True
@@ -69,4 +67,9 @@ pf = pfirst
 def tee(*args, **kwargs):
     print(*args, **kwargs)
     return args[0]
-p2 = tee
+p = tee
+
+def tee_disableable(*args, **kwargs):
+    # print(*args, **kwargs) ############### can disable me by commenting out this line
+    return args[0]
+p2 = tee_disableable
