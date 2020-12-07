@@ -65,3 +65,8 @@ def pfirst(*args, **kwargs):
     return args[0]
 pfirst.called = False
 pf = pfirst
+
+def tee(*args, **kwargs):
+    print(*args, **kwargs)
+    return args[0]
+p2 = tee
