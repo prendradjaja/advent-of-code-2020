@@ -74,5 +74,12 @@ def consecutives(seq, n=2):
             yield tuple(prevs)
             prevs.pop(0)
 
+def transpose(m):
+    """
+    >>> transpose([[1, 2, 3], [4, 5, 6]])
+    [[1, 4], [2, 5], [3, 6]]
+    """
+    return [list(i) for i in zip(*m)]
+
 # for code completion:
 # ascii_lowercase ascii_lowercase defaultdict namedtuple Counter combinations permutations product combinations_with_replacement _replace lru_cache maxsize
