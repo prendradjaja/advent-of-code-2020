@@ -21,11 +21,11 @@ def mutations(prog):
     for i in range(len(prog)):
         if prog[i].which == 'jmp':
             p = prog[:]
-            p[i] = Cmd('nop', p[i][1])
+            p[i] = p[i]._replace(which='nop')
             yield p
         elif prog[i].which == 'nop':
             p = prog[:]
-            p[i] = Cmd('jmp', p[i][1])
+            p[i] = p[i]._replace(which='jmp')
             yield p
 
 def terminates(prog):
