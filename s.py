@@ -1,4 +1,4 @@
-import fileinput, collections, collections as cl, itertools, math, random, sys, re, string
+import fileinput, collections, collections as cl, itertools, math, random, sys, re, string, functools
 from grid import gridsource as grid, gridcustom # *, gridsource, gridcardinal, gridplane
 from util import *
 

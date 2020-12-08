@@ -75,4 +75,4 @@ def consecutives(seq, n=2):
             prevs.pop(0)
 
 # for code completion:
-# ascii_lowercase ascii_lowercase defaultdict namedtuple Counter combinations permutations product combinations_with_replacement
+# ascii_lowercase ascii_lowercase defaultdict namedtuple Counter combinations permutations product combinations_with_replacement _replace lru_cache maxsize
