@@ -104,5 +104,7 @@ def one(seq):
     for item in seq:
         return item
 
-# for code completion:
-# ascii_lowercase ascii_lowercase defaultdict namedtuple Counter combinations permutations product combinations_with_replacement _replace lru_cache maxsize
+# ascii_lowercase ascii_lowercase
+# defaultdict namedtuple Counter _replace
+# combinations permutations product combinations_with_replacement
+# lru_cache maxsize
