@@ -58,6 +58,13 @@ def maybeint(s, mixedstring='error'):
 def findint(s):
     return maybeint(s, 'int')
 
+def findints(s):
+    """
+    >>> findints('1_2__3.45')
+    [1, 2, 3, 45]
+    """
+    return ints(re.findall('\d+', s))
+
 def consecutives(seq, n=2):
     """
     >>> [''.join(t) for t in consecutives('abcd')]
