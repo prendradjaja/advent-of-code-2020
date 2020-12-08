@@ -88,5 +88,13 @@ def transpose(m):
     """
     return [list(i) for i in zip(*m)]
 
+def one(seq):
+    """
+    >>> one([2])
+    2
+    """
+    assert len(seq) == 1, f'Not length 1: {seq}'
+    return seq[0]
+
 # for code completion:
 # ascii_lowercase ascii_lowercase defaultdict namedtuple Counter combinations permutations product combinations_with_replacement _replace lru_cache maxsize
