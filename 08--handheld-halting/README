@@ -1,0 +1,5 @@
+mistakes
+- using livetool too much as a crutch -- probably slowed me down
+- livetool slowing me down bc of while True
+- immutable namedtuple problems
+- prog[i] == 'jmp' instead of prog[i].which == 'jmp'
