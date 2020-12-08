@@ -1,5 +1,23 @@
 import re
 
+def tee_disableable(*args, **kwargs):
+    print(*args, **kwargs) ############### can disable me by commenting out this line
+    return args[0]
+p2 = tee_disableable
+
+def tee(*args, **kwargs):
+    print(*args, **kwargs)
+    return args[0]
+p = tee
+
+def pfirst(*args, **kwargs):
+    if not pfirst.called:
+        pfirst.called = True
+        print(*args, **kwargs)
+    return args[0]
+pfirst.called = False
+pf = pfirst
+
 def ints(strings, mixedstring='error'):
     """
     Parses a sequence of strings, some of which are ints. Usually, each should be either exactly
@@ -55,25 +73,6 @@ def consecutives(seq, n=2):
         if len(prevs) == n:
             yield tuple(prevs)
             prevs.pop(0)
-
-def pfirst(*args, **kwargs):
-    if not pfirst.called:
-        pfirst.called = True
-        print(*args, **kwargs)
-    return args[0]
-pfirst.called = False
-pf = pfirst
-
-def tee(*args, **kwargs):
-    print(*args, **kwargs)
-    return args[0]
-p = tee
-
-def tee_disableable(*args, **kwargs):
-    print(*args, **kwargs) ############### can disable me by commenting out this line
-    return args[0]
-p2 = tee_disableable
-
 
 # for code completion:
 # ascii_lowercase ascii_lowercase defaultdict namedtuple Counter combinations permutations product combinations_with_replacement
