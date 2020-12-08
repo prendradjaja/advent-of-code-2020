@@ -92,9 +92,17 @@ def one(seq):
     """
     >>> one([2])
     2
+    >>> one({2})
+    2
+    >>> one('2')
+    '2'
+    >>> one('22')
+    Traceback (most recent call last):
+    AssertionError: Not length 1: 22
     """
     assert len(seq) == 1, f'Not length 1: {seq}'
-    return seq[0]
+    for item in seq:
+        return item
 
 # for code completion:
 # ascii_lowercase ascii_lowercase defaultdict namedtuple Counter combinations permutations product combinations_with_replacement _replace lru_cache maxsize
