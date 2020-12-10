@@ -19,6 +19,7 @@ class TestMaybeInt(unittest.TestCase):
         self.assertEqual(12, maybeint('12', mode))
         self.assertEqual('yellow', maybeint('yellow', mode))
         self.assertEqual(12, maybeint('mixed12', mode))
+        self.assertEqual(-12, maybeint('mixed-12', mode))
 
     def test_invalid_mode(self):
         mode = 'intt'

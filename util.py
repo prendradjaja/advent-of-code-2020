@@ -49,7 +49,7 @@ def maybeint(s, mixedstring='error'):
             elif mixedstring == 'str':
                 return s
             elif mixedstring == 'int':
-                return int(re.search('[0-9]+', s).group(0))
+                return int(re.search('-?\d+', s).group(0))
             else:
                 raise ValueError('Invalid value for mixedstring: ' + mixedstring)
     else:
@@ -60,10 +60,10 @@ def findint(s):
 
 def findints(s):
     """
-    >>> findints('1_2__3.45')
-    [1, 2, 3, 45]
+    >>> findints('1_-2__3.45')
+    [1, -2, 3, 45]
     """
-    return ints(re.findall('\d+', s))
+    return ints(re.findall('-?\d+', s))
 
 def consecutives(seq, n=2):
     """
