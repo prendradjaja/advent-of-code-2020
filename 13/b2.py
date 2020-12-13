@@ -15,7 +15,7 @@ def wait(bid, start):
 
 f = open(sys.argv[1] if len(sys.argv) > 1 else 'in')
 _ = int(f.readline().strip())
-rawbuses = findints(f.readline().strip())
+rawbuses = ints(f.readline().strip().split(','), 'str')
 # below line is example input. comment out to use the real input
 rawbuses = [7,13,'x','x',59,'x',31,19]
 goal = [i for i, b in enumerate(rawbuses) if b != 'x']
