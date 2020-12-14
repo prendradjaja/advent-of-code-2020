@@ -16,9 +16,11 @@ def wait(bid, start):
 f = open(sys.argv[1] if len(sys.argv) > 1 else 'in')
 _ = int(f.readline().strip())
 rawbuses = ints(f.readline().strip().split(','), 'str')
+foo = [(b, i) for i, b in enumerate(rawbuses) if b != 'x']
 goal = [i for i, b in enumerate(rawbuses) if b != 'x']
 buses = [b for b in rawbuses if b != 'x']
-t = 0
+biggest = max(foo)
+t = biggest[1]
 print('goal \t', goal)
 scatters = [wait(b, t) for b in buses]
 while True:
@@ -28,4 +30,6 @@ while True:
     if goal == scatters:
         print(t)
         exit()
-    t += buses[0]
+    t += biggest[0]
+
+# wait, is there a bug bc 'wait' is written assuming all buses start at 0? if so why does my code work anyway ughhhh
