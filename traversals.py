@@ -64,3 +64,7 @@
     def visit(node, via):  # via = the node you're visiting from
         # (implement me)
         pass
+
+# Practice problems:
+# https://medium.com/techie-delight/top-25-depth-first-search-dfs-practice-problems-a620f0ab9faf
+# https://medium.com/techie-delight/top-20-breadth-first-search-bfs-practice-problems-ac2812283ab1
