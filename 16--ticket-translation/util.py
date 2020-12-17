@@ -7,7 +7,8 @@ p2 = tee_disableable
 
 def tee(*args, **kwargs):
     print(*args, **kwargs)
-    return args[0]
+    if args:
+        return args[0]
 p = tee
 
 def pfirst(*args, **kwargs):
