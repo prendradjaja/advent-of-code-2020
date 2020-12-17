@@ -1,4 +1,5 @@
 import re
+import inspect
 
 def tee_disableable(*args, **kwargs):
     print(*args, **kwargs) ############### can disable me by commenting out this line
@@ -13,12 +14,31 @@ def tee(*args, **kwargs):
 p = tee
 
 def pfirst(*args, **kwargs):
-    if not pfirst.called:
-        pfirst.called = True
+    """
+    For each occurrence of this function in source code, print only on the first call. e.g.
+
+    >>> for n in [1, 2]:
+    ...     _ = pfirst(n * 10)
+    ...     _ = pfirst(n * 100)
+    10
+    100
+    """
+    stack = _getstack()
+    if not stack in pfirst.seen_stacktraces:
+        pfirst.seen_stacktraces.add(stack)
         print(*args, **kwargs)
-    return args[0]
-pfirst.called = False
+    if args:
+        return args[0]
+pfirst.seen_stacktraces = set()
 pf = pfirst
+
+def _getstack():
+    frame = inspect.currentframe()
+    stack = ''
+    while frame:
+        stack += f'{frame.f_lineno}-{frame.f_code.co_name}/'
+        frame = frame.f_back
+    return stack
 
 def ints(strings, mixedstring='error'):
     """
