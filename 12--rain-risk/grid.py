@@ -1,3 +1,5 @@
+import math
+
 """ Many of these methods work for n dimensions """
 def _make_grid_library(names, rotdir):
     """
@@ -41,7 +43,7 @@ def _make_grid_library(names, rotdir):
             return mygrid
 
         @staticmethod
-        def setindex(mygrid, vec, value): # TODO untested
+        def setindex(mygrid, vec, value):
             for x in vec[:-1]:
                 mygrid = mygrid[x]
             mygrid[vec[-1]] = value
@@ -53,7 +55,18 @@ def _make_grid_library(names, rotdir):
         @staticmethod
         def rot(direction, rotation):
             assert rotation in ['L', 'R']
-            return clazz.dirs[(clazz.dirs.index(direction) + (rotdir if rotation == 'R' else -rotdir)) % 4]
+            # return clazz.dirs[(clazz.dirs.index(direction) + (rotdir if rotation == 'R' else -rotdir)) % 4]
+            return clazz.rotvec(direction, rotation)
+
+        @staticmethod
+        def rotvec(vec, rotation):
+            assert rotation in ['L', 'R']
+            forward = (rotation == 'L') ^ (rotdir == 1)
+            y, x = vec
+            if forward:
+                return (x, -y)
+            else:
+                return (-x, y)
 
     return clazz
 
