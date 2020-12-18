@@ -13,6 +13,7 @@ def tee(*args, **kwargs):
         return args[0]
 p = tee
 
+# TODO shouldn't consider full stack, just lineno of function call
 def pfirst(*args, **kwargs):
     """
     For each occurrence of this function in source code, print only on the first call. e.g.
