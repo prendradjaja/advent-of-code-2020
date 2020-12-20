@@ -111,6 +111,28 @@ def transpose(m):
     """
     return [list(i) for i in zip(*m)]
 
+def flipvert(m):
+    """
+    >>> flipvert([[1, 2], [3, 4]])
+    [[3, 4], [1, 2]]
+    """
+    return m[::-1]
+
+def fliphorz(m):
+    """
+    >>> fliphorz([[1, 2], [3, 4]])
+    [[2, 1], [4, 3]]
+    """
+    return transpose(flipvert(transpose(m)))
+
+def rotmat(original):
+    """
+    Rotate clockwise
+    >>> rotmat([[1, 2], [3, 4]])
+    [(3, 1), (4, 2)]
+    """
+    return list(zip(*original[::-1]))
+
 def one(seq):
     """
     >>> one([2])
