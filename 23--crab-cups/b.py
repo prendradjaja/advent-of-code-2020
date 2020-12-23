@@ -1,8 +1,6 @@
-from util import *
-# cups = ints(list('389125467'))
-cups = ints(list('716892543'))
-
-nodes = {}
+INPUT = '716892543'
+CUP_COUNT = 1000 * 1000
+MOVE_COUNT = 10 * 1000 * 1000
 
 class ListNode:
     def __init__(self, value, p, n):
@@ -10,57 +8,61 @@ class ListNode:
         self.p = p
         self.n = n
     def __str__(self):
-        return f'ListNode({self.value}, {self.p.value if self.p else None}, {self.n.value if self.n else None})'
+        return f'ListNode(value={self.value}, p={self.p.value if self.p else None}, n={self.n.value if self.n else None})'
 
+nodes = {}
+
+# Create a circular linked list of cups
 prev = None
 firstnode = None
-for c in cups:
-    newnode = ListNode(c, prev, None)
-    nodes[c] = newnode
+for i in INPUT:
+    i = int(i)
+    newnode = ListNode(i, prev, None)
+    nodes[i] = newnode
     if firstnode == None:
         firstnode = newnode
     if prev:
         prev.n = newnode
     prev = newnode
-for i in range(10, 1000 * 1000 + 1):
+for i in range(10, CUP_COUNT + 1):
     newnode = ListNode(i, prev, None)
     nodes[i] = newnode
     prev.n = newnode
     prev = newnode
-
-lastnode = newnode
-lastnode.n = firstnode
-firstnode.p = lastnode
-
-limit = lastnode.value
+newnode.n = firstnode
+firstnode.p = newnode
 
 curr = firstnode
-for _ in range(10 * 1000 * 1000):
+for _ in range(MOVE_COUNT):
     one   = curr.n
     two   = curr.n.n
     three = curr.n.n.n
     four  = curr.n.n.n.n
 
+    # Pick up cups one, two, and three by removing them from the list
     curr.n = four
     four.p = curr
 
+    # Find the destination cup
     destval = curr.value
     illegal = [curr.value, one.value, two.value, three.value]
     while destval in illegal:
         destval -= 1
         if destval == 0:
-            destval = limit
-
+            destval = CUP_COUNT
     dest = nodes[destval]
-    afterdest = dest.n
+    after = dest.n
 
+    # Insert one-two-three between dest and after
     dest.n = one
     one.p = dest
-    three.n = afterdest
-    afterdest.p = three
+    three.n = after
+    after.p = three
 
+    # Next cup
     curr = curr.n
 
+# Find cup 1
 while curr.value != 1:
     curr = curr.n
 
