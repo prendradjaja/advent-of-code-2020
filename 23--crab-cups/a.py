@@ -1,13 +1,12 @@
 import fileinput, collections, collections as cl, itertools, math, random, sys, re, string, functools
-from grid import gridsource as grid, gridcustom # *, gridsource, gridcardinal, gridplane
-from util import *
+# from grid import gridsource as grid, gridcustom # *, gridsource, gridcardinal, gridplane
+from util import ints
 
 # notes for optimizing for part 2
 # ################# = copy basically the entire array -- probably super slow
 # #### = iterate over the array -- possibly slow
 
 def main():
-    f = open(sys.argv[1] if len(sys.argv) > 1 else 'in')
     cups = ints(list('716892543'))
     # cups = ints(list('389125467'))
 
