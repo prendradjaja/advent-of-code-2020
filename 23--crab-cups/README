@@ -1,3 +1,7 @@
 a.py:  My initial part 1 solution
 a2.py: Preparing for part 2 solution by redoing part 1
 b.py:  Part 2 solution
+
+distances.py:
+  Code to check if what I thought was a "key insight" was true (it's not).
+  See https://www.reddit.com/r/adventofcode/comments/kimluc/2020_day_23_solutions/ggs1g19/?context=3
