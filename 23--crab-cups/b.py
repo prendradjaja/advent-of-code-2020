@@ -1,3 +1,5 @@
+import itertools
+
 INPUT = '716892543'
 CUP_COUNT = 1000 * 1000
 MOVE_COUNT = 10 * 1000 * 1000
@@ -15,19 +17,16 @@ nodes = {}
 # Create a circular linked list of cups
 prev = None
 firstnode = None
-for i in INPUT:
-    i = int(i)
+for i in itertools.chain(
+    (int(c) for c in INPUT),
+    range(10, CUP_COUNT + 1),
+):
     newnode = ListNode(i, prev, None)
     nodes[i] = newnode
-    if firstnode == None:
+    if firstnode is None:
         firstnode = newnode
     if prev:
         prev.n = newnode
-    prev = newnode
-for i in range(10, CUP_COUNT + 1):
-    newnode = ListNode(i, prev, None)
-    nodes[i] = newnode
-    prev.n = newnode
     prev = newnode
 newnode.n = firstnode
 firstnode.p = newnode
