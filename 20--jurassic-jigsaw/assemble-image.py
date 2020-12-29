@@ -20,7 +20,7 @@ def subimage(img, rows, cols):
         res.append(line)
     return res
 
-def get_borders(lines, canonicalize):
+def get_borders(lines, canonicalize=False):
     r, c = (0, 0)
     if canonicalize:
         top = canon(''.join([lines[r][ c+i] for i in range(10)]))
@@ -35,17 +35,11 @@ def get_borders(lines, canonicalize):
     return Sides(top, bot, lef, ri)
 
 def get_neighbors(tile, tids_by_border):
-    bs = borders(tile.lines)
+    bs = get_borders(tile.lines, True)
     res = []
     for b in sorted(bs):
         res.extend(list(tids_by_border[b]))
     return set(res) - {tile.tid}
-
-def borders(lines):
-    # horz = topbotbords(lines)
-    # vert = topbotbords(transpose(lines))
-    # return horz | vert
-    return list(get_borders(lines, True))
 
 def main():
     PART_1 = len(sys.argv) > 2 and sys.argv[2] == 'p1'
@@ -53,62 +47,47 @@ def main():
     tiles = [parse(t) for t in f.read().split('\n\n')]
     tids_by_border = collections.defaultdict(set)
     for t in sorted(tiles):
-        bs = borders(t.lines)
+        bs = get_borders(t.lines, True)
         for b in sorted(bs):
             tids_by_border[b].add(t.tid)
 
     img = {}
     positions = {}  # by tid
 
-    def orient(t, prev):
-        match = one(borders(t) & borders(prev))
-
-    def iterbord(prev, canonicalize):
-        r, c = positions[prev.tid]
-        lines = subimage(img, range(r, r + 10), range(c, c + 10))
-        res = get_borders(lines, canonicalize)
-        return res
-
     def place(u, parent):
-        # print('finding placement for', u)
         u = get_tile(u, tiles)
         parent = get_tile(parent, tiles)
-
         r, c = positions[parent.tid]
+        parent_lines = subimage(img, range(r, r + 10), range(c, c + 10))
 
-        ps = iterbord(parent, False)
-        psc = iterbord(parent, True)
-        us = get_borders(u.lines, False)
-        usc = get_borders(u.lines, True)
+        ps = get_borders(parent_lines, False)
+        psc = get_borders(parent_lines, True)
+        us = get_borders(u.lines)
+        usc = get_borders(u.lines,True)
         match = one(set(psc) & set(usc))
 
         if match == psc.bot:
             pedge = ps.bot
             for lines in oris(u):
-                uedge = get_borders(lines, False).top
+                uedge = get_borders(lines).top
                 if uedge == pedge:
                     return (r+10, c), lines
         elif match == psc.ri:
             pedge = ps.ri
             for lines in oris(u):
-                uedge = get_borders(lines, False).lef
+                uedge = get_borders(lines).lef
                 if uedge == pedge:
                     return (r, c+10), lines
         elif match == psc.top:
             pedge = ps.top
             for lines in oris(u):
-                # bla = get_borders(lines, False)
-                uedge = get_borders(lines, False).bot
+                uedge = get_borders(lines).bot
                 if uedge == pedge:
-                    # print('top')
-                    # print(uedge)
-                    # print(pedge)
-                    # print(bla)
                     return (r-10, c), lines
         elif match == psc.lef:
             pedge = ps.lef
             for lines in oris(u):
-                uedge = get_borders(lines, False).ri
+                uedge = get_borders(lines).ri
                 if uedge == pedge:
                     return (r, c-10), lines
         else: raise Exception("impossible")
