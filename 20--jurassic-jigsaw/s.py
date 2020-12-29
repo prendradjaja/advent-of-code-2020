@@ -171,10 +171,16 @@ def main():
         else:
             return '?'
     imglines = []
-    for r in rs:
-        line = ''
-        for c in cs:
-            line += getpix(r,c)
+    for y, r in enumerate(rs):
+        if y % 10 in [0, 9]:
+            continue
+        else:
+            line = ''
+            for x, c in enumerate(cs):
+                if x % 10 in [0, 9]:
+                    pass
+                else:
+                    line += getpix(r,c)
         imglines.append(line)
     for line in imglines:
         print(line)
