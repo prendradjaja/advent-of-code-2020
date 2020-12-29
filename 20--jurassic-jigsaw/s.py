@@ -11,16 +11,16 @@ def main():
     f = open(sys.argv[1] if len(sys.argv) > 1 else 'in')
     tiles = [parse(t) for t in f.read().split('\n\n')]
     tilesbybord = collections.defaultdict(set)
-    for t in tiles:
+    for t in sorted(tiles):
         bs = borders(t.lines)
-        for b in bs:
+        for b in sorted(bs):
             tilesbybord[b].add(t.tid)
     # p(tilesbybord)
 
     def matches(t):
         bs = borders(t.lines)
         res = []
-        for b in bs:
+        for b in sorted(bs):
             res.extend(list(tilesbybord[b]))
         return set(res) - {t.tid}
 
@@ -167,7 +167,7 @@ def main():
             positions[u] = pos
 
         visited.add(u)
-        for v in matches(getbyid(u)):
+        for v in sorted(matches(getbyid(u))):
             if v not in visited:
                 dfs(v, u)
     dfs(tiles[0].tid)
