@@ -8,6 +8,7 @@ Sides = cl.namedtuple('s', 'top bot lef ri')
 ans = 63187742854073
 
 def main():
+    PART_1 = len(sys.argv) > 2 and sys.argv[2] == 'p1'
     f = open(sys.argv[1] if len(sys.argv) > 1 else 'in')
     tiles = [parse(t) for t in f.read().split('\n\n')]
     tilesbybord = collections.defaultdict(set)
@@ -140,7 +141,7 @@ def main():
     def dfs(u, parent=None):
         # (visit goes here)
         # p(u)
-        if not visited: # first tile
+        if len(visited) == 0: # first tile
             t = getbyid(u)
             for r, row in enumerate(t.lines):
                 for c, ch in enumerate(row):
@@ -170,20 +171,34 @@ def main():
             return img[(r, c)]
         else:
             return '?'
-    imglines = []
-    for y, r in enumerate(rs):
-        if y % 10 in [0, 9]:
-            continue
-        else:
-            line = ''
-            for x, c in enumerate(cs):
-                if x % 10 in [0, 9]:
-                    pass
-                else:
-                    line += getpix(r,c)
-        imglines.append(line)
-    for line in imglines:
-        print(line)
+
+    if PART_1:
+        ids = {pos: idnum for (idnum, pos) in positions.items()}
+        rmin = min(rs)
+        rmax = max(rs) - 9
+        cmin = min(cs)
+        cmax = max(cs) - 9
+        rs2 = [rmin, rmax]
+        cs2 = [cmin, cmax]
+        res = 1
+        for pos in itertools.product(rs2, cs2):
+            res *= ids[pos]
+        print(res)
+    else:
+        imglines = []
+        for y, r in enumerate(rs):
+            if y % 10 in [0, 9]:
+                continue
+            else:
+                line = ''
+                for x, c in enumerate(cs):
+                    if x % 10 in [0, 9]:
+                        pass
+                    else:
+                        line += getpix(r,c)
+            imglines.append(line)
+        for line in imglines:
+            print(line)
 
 def extent(img):
     rs = [r for (r, c) in img.keys()]
