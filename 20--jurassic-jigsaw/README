@@ -1,8 +1,3 @@
-Part 1:
-  python3 a.py
-
-Alternate part 1, if I had done it the "long way" (i.e. doing part 1 and 2 at the same time)
-  python3 assemble-image.py in p1  # first argument is the input file, second is telling the program we're doing part 1
-
-Part 2:
-  sh b.sh
+a.py:  Competition solution to part 1
+b.py:  Post-competition solution to part 2
+a2.py: Post-competition solution to part 1. Shares code with b.py.
