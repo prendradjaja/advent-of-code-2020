@@ -22,18 +22,23 @@ def main():
 
     visited = set()
     def dfs(u, parent=None):
-        if len(visited) == 0:
-            t = get_tile(u, tiles)
-            for r, row in enumerate(t.lines):
-                for c, ch in enumerate(row):
-                    img[(r, c)] = ch
-            positions[u] = (0, 0)
-        else:
-            pos, lines = place(u, parent, tiles, positions, img)
+        def visit():
+            # Determine this tile's placement
+            if len(visited) == 0:
+                pos = (0, 0)
+                lines = get_tile(u, tiles).lines
+            else:
+                pos, lines = get_placement(u, parent, tiles, positions, img)
+
+            # Place this tile
             for r, row in enumerate(lines):
                 for c, ch in enumerate(row):
                     img[grid.addvec(pos, (r, c))] = ch
+
+            # Store the placement of this tile's top-left corner (to be used by future get_placement calls in future visits)
             positions[u] = pos
+
+        visit()
         visited.add(u)
 
         for v in sorted(get_neighbors(get_tile(u, tiles), tids_by_border)):
@@ -77,7 +82,7 @@ def main():
         for line in imglines:
             print(line)
 
-def place(u, parent, tiles, positions, img):  #TODO requires a lot of state passed around!
+def get_placement(u, parent, tiles, positions, img):  #TODO requires a lot of state passed around!
     u = get_tile(u, tiles)
     parent = get_tile(parent, tiles)
     r, c = positions[parent.tid]
