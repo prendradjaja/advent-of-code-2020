@@ -184,7 +184,6 @@ def main():
         imglines.append(line)
     for line in imglines:
         print(line)
-    print()
 
 def extent(img):
     rs = [r for (r, c) in img.keys()]
