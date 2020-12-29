@@ -137,19 +137,6 @@ def main():
 
 
     visited = set()
-    def display():
-        rs, cs = extent(img)
-        # print(rs, cs)
-        def getpix(r, c):
-            if (r, c) in img:
-                return img[(r, c)]
-            else:
-                return '?'
-        for r in rs:
-            for c in cs:
-                print(getpix(r,c), end='')
-            print()
-        print()
     def dfs(u, parent=None):
         # (visit goes here)
         # p(u)
@@ -176,7 +163,22 @@ def main():
             if v not in visited:
                 dfs(v, u)
     dfs(tiles[0].tid)
-    display()
+
+    rs, cs = extent(img)
+    def getpix(r, c):
+        if (r, c) in img:
+            return img[(r, c)]
+        else:
+            return '?'
+    imglines = []
+    for r in rs:
+        line = ''
+        for c in cs:
+            line += getpix(r,c)
+        imglines.append(line)
+    for line in imglines:
+        print(line)
+    print()
 
 def extent(img):
     rs = [r for (r, c) in img.keys()]
