@@ -9,6 +9,7 @@ monster = """
                   # 
 #    ##    ##    ###
  #  #  #  #  #  #   """.replace(' ', '.').split('\n')[1:]
+MONSTER_HEIGHT = len(monster)
 
 def find_monsters_and_roughness(lines):
     pattern = interleave(monster)
@@ -38,10 +39,10 @@ def interleave(lines):
 def paintmons(m, regex):
     monsters = 0
     newm = [list(line) for line in m]  # copy and turn lines into mutable lists
-    for i, lines in enumerate(consecutives((l.strip() for l in m), 3)):
+    for i, lines in enumerate(consecutives((l.strip() for l in m), MONSTER_HEIGHT)):
         ilines = interleave(lines)
         for match in regex.finditer(ilines):
-            if match.start() % 3 == 0:
+            if match.start() % MONSTER_HEIGHT == 0:
                 # monster found!
                 monsters += 1
 
@@ -50,7 +51,7 @@ def paintmons(m, regex):
                     for c, ch in enumerate(line):
                         if ch == '#':
                             y = r + i
-                            x = c + (match.start() // 3)
+                            x = c + (match.start() // MONSTER_HEIGHT)
                             # print( m[y][x] == '#')
                             assert m[y][x] == '#'
                             newm[y][x] = 'O'

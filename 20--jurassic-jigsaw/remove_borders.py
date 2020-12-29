@@ -4,12 +4,12 @@ def remove_borders(img):
     rs, cs = extent(img)
     imglines = []
     for y, r in enumerate(rs):
-        if y % 10 in [0, 9]:
+        if y % TILE_SIZE in [0, TILE_SIZE - 1]:
             continue
         else:
             line = ''
             for x, c in enumerate(cs):
-                if x % 10 in [0, 9]:
+                if x % TILE_SIZE in [0, TILE_SIZE - 1]:
                     pass
                 else:
                     line += img[(r, c)]

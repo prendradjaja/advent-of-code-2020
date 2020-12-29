@@ -51,7 +51,7 @@ def get_placement(u, parent, tiles, positions, img):  #TODO requires a lot of st
     u = get_tile(u, tiles)
     parent = get_tile(parent, tiles)
     r, c = positions[parent.tid]
-    parent_lines = subimage(img, range(r, r + 10), range(c, c + 10))
+    parent_lines = subimage(img, range(r, r + TILE_SIZE), range(c, c + TILE_SIZE))
 
     ps = get_borders(parent_lines, False)
     psc = get_borders(parent_lines, True)
@@ -64,24 +64,47 @@ def get_placement(u, parent, tiles, positions, img):  #TODO requires a lot of st
         for lines in orientations(u.lines):
             uedge = get_borders(lines).top
             if uedge == pedge:
-                return (r+10, c), lines
+                return (r+TILE_SIZE, c), lines
     elif match == psc.ri:
         pedge = ps.ri
         for lines in orientations(u.lines):
             uedge = get_borders(lines).lef
             if uedge == pedge:
-                return (r, c+10), lines
+                return (r, c+TILE_SIZE), lines
     elif match == psc.top:
         pedge = ps.top
         for lines in orientations(u.lines):
             uedge = get_borders(lines).bot
             if uedge == pedge:
-                return (r-10, c), lines
+                return (r-TILE_SIZE, c), lines
     elif match == psc.lef:
         pedge = ps.lef
         for lines in orientations(u.lines):
             uedge = get_borders(lines).ri
             if uedge == pedge:
-                return (r, c-10), lines
+                return (r, c-TILE_SIZE), lines
     else: raise Exception("impossible")
     return pos, lines
+
+def subimage(img, rows, cols):
+    """
+    Does a little bit more than it says on the tin: Also converts from coord-keyed dict to list of rows
+    """
+    res = []
+    for r in rows:
+        line = ''
+        for c in cols:
+            line += img[(r, c)]
+        res.append(line)
+    return res
+
+def get_neighbors(tid, tiles, tids_by_border):
+    tile = get_tile(tid, tiles)
+    bs = get_borders(tile.lines, True)
+    res = []
+    for b in sorted(bs):
+        res.extend(list(tids_by_border[b]))
+    return set(res) - {tile.tid}
+
+def get_tile(tid, tiles):
+    return one([t for t in tiles if t.tid == tid])
