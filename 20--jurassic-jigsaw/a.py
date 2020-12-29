@@ -21,10 +21,12 @@ def main():
             res.extend(list(tilesbybord[b]))
         return set(res) - {t.tid}
 
+    res = 1
     for t in tiles:
         # p(t.tid, matches(t))
-        p(t.tid, len(matches(t)))
-        # Did the rest with Vim
+        if len(matches(t)) == 2:
+            res *= t.tid
+    print(res)
 
 
 def parse(t):
