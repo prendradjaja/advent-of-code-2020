@@ -17,17 +17,15 @@ def subimage(img, rows, cols):
     return res
 
 def get_borders(lines, canonicalize=False):
+    sides = [
+        ''.join([lines[0][i] for i in range(10)]),
+        ''.join([lines[9][i] for i in range(10)]),
+        ''.join([lines[i][0] for i in range(10)]),
+        ''.join([lines[i][9] for i in range(10)]),
+    ]
     if canonicalize:
-        top = canon(''.join([lines[0][ i] for i in range(10)]))
-        bot = canon(''.join([lines[9][ i] for i in range(10)]))
-        lef = canon(''.join([lines[i][ 0] for i in range(10)]))
-        ri = canon(''.join([lines[i][ 9] for i in range(10)]))
-    else:
-        top = (''.join([lines[0][ i] for i in range(10)]))
-        bot = (''.join([lines[9][ i] for i in range(10)]))
-        lef = (''.join([lines[i][ 0] for i in range(10)]))
-        ri = (''.join([lines[i][ 9] for i in range(10)]))
-    return Sides(top, bot, lef, ri)
+        sides = [canon(s) for s in sides]
+    return Sides(*sides)
 
 def get_neighbors(tile, tids_by_border):
     bs = get_borders(tile.lines, True)
