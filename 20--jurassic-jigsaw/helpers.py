@@ -1,6 +1,8 @@
 import fileinput, collections, collections as cl, itertools, math, random, sys, re, string, functools
 from util import *
 
+Sides = cl.namedtuple('s', 'top bot lef ri')
+
 Tile = cl.namedtuple('t', 'tid lines')
 def extent(img):
     rs = [r for (r, c) in img.keys()]
@@ -31,4 +33,32 @@ def canon(line):
             return rev
     except:
         print('failed', line)
+
+
+def subimage(img, rows, cols):
+    res = []
+    for r in rows:
+        line = ''
+        for c in cols:
+            line += img[(r, c)]
+        res.append(line)
+    return res
+
+def get_borders(lines, canonicalize=False):
+    sides = [
+        ''.join([lines[0][i] for i in range(10)]),
+        ''.join([lines[9][i] for i in range(10)]),
+        ''.join([lines[i][0] for i in range(10)]),
+        ''.join([lines[i][9] for i in range(10)]),
+    ]
+    if canonicalize:
+        sides = [canon(s) for s in sides]
+    return Sides(*sides)
+
+def get_neighbors(tile, tids_by_border):
+    bs = get_borders(tile.lines, True)
+    res = []
+    for b in sorted(bs):
+        res.extend(list(tids_by_border[b]))
+    return set(res) - {tile.tid}
 
