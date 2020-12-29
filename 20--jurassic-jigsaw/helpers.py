@@ -12,20 +12,8 @@ def parse(t):
     n = findint(n)
     return Tile(n, lines)
 
-def get_neighbors(tile, tids_by_border):
-    bs = borders(tile.lines)
-    res = []
-    for b in sorted(bs):
-        res.extend(list(tids_by_border[b]))
-    return set(res) - {tile.tid}
-
 def get_tile(tid, tiles):
     return one([t for t in tiles if t.tid == tid])
-
-def borders(lines):
-    horz = topbotbords(lines)
-    vert = topbotbords(transpose(lines))
-    return horz | vert
 
 def topbotbords(lines):
     return set([canon(lines[0]), canon(lines[-1])])

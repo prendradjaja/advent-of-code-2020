@@ -16,12 +16,36 @@ def subimage(img, rows, cols):
     for r in rows:
         line = ''
         for c in cols:
-            if (r, c) in img:
-                line += '#'
-            else:
-                line += '.'
+            line += img[(r, c)]
         res.append(line)
     return res
+
+def get_borders(lines, canonicalize):
+    r, c = (0, 0)
+    if canonicalize:
+        top = canon(''.join([lines[r][ c+i] for i in range(10)]))
+        bot = canon(''.join([lines[r+9][ c+i] for i in range(10)]))
+        lef = canon(''.join([lines[r+i][ c] for i in range(10)]))
+        ri = canon(''.join([lines[r+i][ c+9] for i in range(10)]))
+    else:
+        top = (''.join([lines[r][ c+i] for i in range(10)]))
+        bot = (''.join([lines[r+9][ c+i] for i in range(10)]))
+        lef = (''.join([lines[r+i][ c] for i in range(10)]))
+        ri = (''.join([lines[r+i][ c+9] for i in range(10)]))
+    return Sides(top, bot, lef, ri)
+
+def get_neighbors(tile, tids_by_border):
+    bs = borders(tile.lines)
+    res = []
+    for b in sorted(bs):
+        res.extend(list(tids_by_border[b]))
+    return set(res) - {tile.tid}
+
+def borders(lines):
+    # horz = topbotbords(lines)
+    # vert = topbotbords(transpose(lines))
+    # return horz | vert
+    return list(get_borders(lines, True))
 
 def main():
     PART_1 = len(sys.argv) > 2 and sys.argv[2] == 'p1'
@@ -40,35 +64,10 @@ def main():
         match = one(borders(t) & borders(prev))
 
     def iterbord(prev, canonicalize):
-        # r, c = positions[prev.tid]
-        # lines = subimage(img, range(r, r + 10), range(c, c + 10))
-        # return iterunplaced(lines, canonicalize)
         r, c = positions[prev.tid]
-        if canonicalize:
-            top = canon(''.join([img[(r, c+i)] for i in range(10)]))
-            bot = canon(''.join([img[(r+9, c+i)] for i in range(10)]))
-            lef = canon(''.join([img[(r+i, c)] for i in range(10)]))
-            ri = canon(''.join([img[(r+i, c+9)] for i in range(10)]))
-        else:
-            top = (''.join([img[(r, c+i)] for i in range(10)]))
-            bot = (''.join([img[(r+9, c+i)] for i in range(10)]))
-            lef = (''.join([img[(r+i, c)] for i in range(10)]))
-            ri = (''.join([img[(r+i, c+9)] for i in range(10)]))
-        return Sides(top, bot, lef, ri)
-
-    def iterunplaced(lines, canonicalize):
-        r, c = (0, 0)
-        if canonicalize:
-            top = canon(''.join([lines[r][ c+i] for i in range(10)]))
-            bot = canon(''.join([lines[r+9][ c+i] for i in range(10)]))
-            lef = canon(''.join([lines[r+i][ c] for i in range(10)]))
-            ri = canon(''.join([lines[r+i][ c+9] for i in range(10)]))
-        else:
-            top = (''.join([lines[r][ c+i] for i in range(10)]))
-            bot = (''.join([lines[r+9][ c+i] for i in range(10)]))
-            lef = (''.join([lines[r+i][ c] for i in range(10)]))
-            ri = (''.join([lines[r+i][ c+9] for i in range(10)]))
-        return Sides(top, bot, lef, ri)
+        lines = subimage(img, range(r, r + 10), range(c, c + 10))
+        res = get_borders(lines, canonicalize)
+        return res
 
     def place(u, parent):
         # print('finding placement for', u)
@@ -79,37 +78,27 @@ def main():
 
         ps = iterbord(parent, False)
         psc = iterbord(parent, True)
-        us = iterunplaced(u.lines, False)
-        usc = iterunplaced(u.lines, True)
+        us = get_borders(u.lines, False)
+        usc = get_borders(u.lines, True)
         match = one(set(psc) & set(usc))
-
-        # if match == psc.bot:
-        #     if match == usc.top:
-        #         pos = (r+10, c)
-        #         res = u.lines
-        #         if ps.bot != us.top:
-        #             res = fliphorz(res)
-        #     elif match == 
-        #     else: raise Exception("To implement")
-        # else: raise Exception("To implement")
 
         if match == psc.bot:
             pedge = ps.bot
             for lines in oris(u):
-                uedge = iterunplaced(lines, False).top
+                uedge = get_borders(lines, False).top
                 if uedge == pedge:
                     return (r+10, c), lines
         elif match == psc.ri:
             pedge = ps.ri
             for lines in oris(u):
-                uedge = iterunplaced(lines, False).lef
+                uedge = get_borders(lines, False).lef
                 if uedge == pedge:
                     return (r, c+10), lines
         elif match == psc.top:
             pedge = ps.top
             for lines in oris(u):
-                # bla = iterunplaced(lines, False)
-                uedge = iterunplaced(lines, False).bot
+                # bla = get_borders(lines, False)
+                uedge = get_borders(lines, False).bot
                 if uedge == pedge:
                     # print('top')
                     # print(uedge)
@@ -119,7 +108,7 @@ def main():
         elif match == psc.lef:
             pedge = ps.lef
             for lines in oris(u):
-                uedge = iterunplaced(lines, False).ri
+                uedge = get_borders(lines, False).ri
                 if uedge == pedge:
                     return (r, c-10), lines
         else: raise Exception("impossible")
