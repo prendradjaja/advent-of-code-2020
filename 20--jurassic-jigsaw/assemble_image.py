@@ -4,7 +4,6 @@ from util import *
 from helpers import *
 
 def assemble_image(tiles, tids_by_border):
-
     # { [(row, col)]: '#' or '.' }
     img = {}
 
@@ -29,7 +28,6 @@ def assemble_image(tiles, tids_by_border):
                 for c, ch in enumerate(row):
                     img[grid.addvec(pos, (r, c))] = ch
 
-            # Store the placement of this tile's top-left corner (to be used by future get_placement calls in future visits)
             positions[u] = pos
 
         visit()
@@ -44,6 +42,12 @@ def assemble_image(tiles, tids_by_border):
     return img, positions
 
 def get_placement(u, parent, tiles, positions, img):  #TODO requires a lot of state passed around!
+    """
+    Determine where to place the new tile
+
+    u: tid of new tile
+    parent: tid of the previously-placed tile ("parent" in DFS) that this new tile will be adjacent to
+    """
     u = get_tile(u, tiles)
     parent = get_tile(parent, tiles)
     r, c = positions[parent.tid]
@@ -81,11 +85,3 @@ def get_placement(u, parent, tiles, positions, img):  #TODO requires a lot of st
                 return (r, c-10), lines
     else: raise Exception("impossible")
     return pos, lines
-
-def orientations(lines):
-    for i in range(4):
-        lines = rotmat(lines)
-        yield lines
-        yield fliphorz(lines)
-
-# main() # if __name__ == '__main__' and not sys.flags.inspect: main()

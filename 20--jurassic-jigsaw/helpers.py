@@ -66,3 +66,8 @@ def get_neighbors(tid, tiles, tids_by_border):
         res.extend(list(tids_by_border[b]))
     return set(res) - {tile.tid}
 
+def orientations(lines):
+    for i in range(4):
+        lines = rotmat(lines)
+        yield [''.join(l) for l in lines]
+        yield [''.join(l) for l in fliphorz(lines)]
