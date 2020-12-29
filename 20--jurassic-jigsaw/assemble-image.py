@@ -1,40 +1,37 @@
 import fileinput, collections, collections as cl, itertools, math, random, sys, re, string, functools
 from grid import gridsource as grid, gridcustom # *, gridsource, gridcardinal, gridplane
 from util import *
+from helpers import *
 
-Tile = cl.namedtuple('t', 'tid lines')
 Sides = cl.namedtuple('s', 'top bot lef ri')
 
 ans = 63187742854073
+
+def subimage(img, rows, cols):
+    # res = []
+    # for row in m[startrow:endrow]:
+    #     res.append(row[startcol:endcol])
+    # return res
+    res = []
+    for r in rows:
+        line = ''
+        for c in cols:
+            if (r, c) in img:
+                line += '#'
+            else:
+                line += '.'
+        res.append(line)
+    return res
 
 def main():
     PART_1 = len(sys.argv) > 2 and sys.argv[2] == 'p1'
     f = open(sys.argv[1] if len(sys.argv) > 1 else 'in')
     tiles = [parse(t) for t in f.read().split('\n\n')]
-    tilesbybord = collections.defaultdict(set)
+    tids_by_border = collections.defaultdict(set)
     for t in sorted(tiles):
         bs = borders(t.lines)
         for b in sorted(bs):
-            tilesbybord[b].add(t.tid)
-    # p(tilesbybord)
-
-    def matches(t):
-        bs = borders(t.lines)
-        res = []
-        for b in sorted(bs):
-            res.extend(list(tilesbybord[b]))
-        return set(res) - {t.tid}
-
-    # first = True
-    # while tiles:
-    #     if first:
-    #         t = tiles[0]
-    #         tiles.remove(t)
-    #     else:
-    #         prev = t
-
-    def getbyid(tid):
-        return one([t for t in tiles if t.tid == tid])
+            tids_by_border[b].add(t.tid)
 
     img = {}
     positions = {}  # by tid
@@ -43,6 +40,9 @@ def main():
         match = one(borders(t) & borders(prev))
 
     def iterbord(prev, canonicalize):
+        # r, c = positions[prev.tid]
+        # lines = subimage(img, range(r, r + 10), range(c, c + 10))
+        # return iterunplaced(lines, canonicalize)
         r, c = positions[prev.tid]
         if canonicalize:
             top = canon(''.join([img[(r, c+i)] for i in range(10)]))
@@ -70,13 +70,10 @@ def main():
             ri = (''.join([lines[r+i][ c+9] for i in range(10)]))
         return Sides(top, bot, lef, ri)
 
-    def revstr(line):
-        return ''.join(reversed(line))
-
     def place(u, parent):
         # print('finding placement for', u)
-        u = getbyid(u)
-        parent = getbyid(parent)
+        u = get_tile(u, tiles)
+        parent = get_tile(parent, tiles)
 
         r, c = positions[parent.tid]
 
@@ -142,7 +139,7 @@ def main():
         # (visit goes here)
         # p(u)
         if len(visited) == 0: # first tile
-            t = getbyid(u)
+            t = get_tile(u, tiles)
             for r, row in enumerate(t.lines):
                 for c, ch in enumerate(row):
                     img[(r, c)] = ch
@@ -160,7 +157,7 @@ def main():
             positions[u] = pos
 
         visited.add(u)
-        for v in sorted(matches(getbyid(u))):
+        for v in sorted(get_neighbors(get_tile(u, tiles), tids_by_border)):
             if v not in visited:
                 dfs(v, u)
     dfs(tiles[0].tid)
@@ -183,7 +180,7 @@ def main():
         res = 1
         for pos in itertools.product(rs2, cs2):
             res *= ids[pos]
-        print(res)
+        print(res == ans)
     else:
         imglines = []
         for y, r in enumerate(rs):
@@ -199,39 +196,5 @@ def main():
             imglines.append(line)
         for line in imglines:
             print(line)
-
-def extent(img):
-    rs = [r for (r, c) in img.keys()]
-    cs = [c for (r, c) in img.keys()]
-    return [range(min(rs), max(rs)+1), range(min(cs), max(cs)+1)]
-
-
-
-def parse(t):
-    n, *lines = [x for x in t.strip().split('\n')]
-    n = findint(n)
-    return Tile(n, lines)
-
-def borders(lines):
-    horz = topbotbords(lines)
-    vert = topbotbords(transpose(lines))
-    return horz | vert
-
-def topbotbords(lines):
-    return set([canon(lines[0]), canon(lines[-1])])
-
-def canon(line):
-    try:
-        line = ''.join(line)
-        a = int(line.replace('#','1').replace('.','0'), 2)
-        rev = ''.join(reversed(line))
-        b = int(rev.replace('#','1').replace('.','0'), 2)
-        # print('ok', line)
-        if a > b:
-            return line
-        else:
-            return rev
-    except:
-        print('failed', line)
 
 main() # if __name__ == '__main__' and not sys.flags.inspect: main()
