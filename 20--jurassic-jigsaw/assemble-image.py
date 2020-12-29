@@ -8,10 +8,6 @@ Sides = cl.namedtuple('s', 'top bot lef ri')
 ans = 63187742854073
 
 def subimage(img, rows, cols):
-    # res = []
-    # for row in m[startrow:endrow]:
-    #     res.append(row[startcol:endcol])
-    # return res
     res = []
     for r in rows:
         line = ''
@@ -21,17 +17,16 @@ def subimage(img, rows, cols):
     return res
 
 def get_borders(lines, canonicalize=False):
-    r, c = (0, 0)
     if canonicalize:
-        top = canon(''.join([lines[r][ c+i] for i in range(10)]))
-        bot = canon(''.join([lines[r+9][ c+i] for i in range(10)]))
-        lef = canon(''.join([lines[r+i][ c] for i in range(10)]))
-        ri = canon(''.join([lines[r+i][ c+9] for i in range(10)]))
+        top = canon(''.join([lines[0][ i] for i in range(10)]))
+        bot = canon(''.join([lines[9][ i] for i in range(10)]))
+        lef = canon(''.join([lines[i][ 0] for i in range(10)]))
+        ri = canon(''.join([lines[i][ 9] for i in range(10)]))
     else:
-        top = (''.join([lines[r][ c+i] for i in range(10)]))
-        bot = (''.join([lines[r+9][ c+i] for i in range(10)]))
-        lef = (''.join([lines[r+i][ c] for i in range(10)]))
-        ri = (''.join([lines[r+i][ c+9] for i in range(10)]))
+        top = (''.join([lines[0][ i] for i in range(10)]))
+        bot = (''.join([lines[9][ i] for i in range(10)]))
+        lef = (''.join([lines[i][ 0] for i in range(10)]))
+        ri = (''.join([lines[i][ 9] for i in range(10)]))
     return Sides(top, bot, lef, ri)
 
 def get_neighbors(tile, tids_by_border):
@@ -135,6 +130,7 @@ def main():
         if (r, c) in img:
             return img[(r, c)]
         else:
+            1/0
             return '?'
 
     if PART_1:
