@@ -3,23 +3,16 @@ from grid import gridsource as grid, gridcustom # *, gridsource, gridcardinal, g
 from util import *
 from helpers import *
 
-ans = 63187742854073
-def main():
-    PART_1 = len(sys.argv) > 2 and sys.argv[2] == 'p1'
-    f = open(sys.argv[1] if len(sys.argv) > 1 else 'in')
-    tiles = [parse(t) for t in f.read().split('\n\n')]
-    tids_by_border = collections.defaultdict(set)
-    for t in sorted(tiles):
-        bs = get_borders(t.lines, True)
-        for b in sorted(bs):
-            tids_by_border[b].add(t.tid)
+def assemble_image(tiles, tids_by_border):
 
+    # { [(row, col)]: '#' or '.' }
     img = {}
-    positions = {}  # by tid
 
+    # top left corner position of each placed tile
+    # { [tid]: (row, col) }
+    positions = {}
 
-
-
+    # tids of visited tiles
     visited = set()
 
     def dfs(u, parent=None):
@@ -48,41 +41,7 @@ def main():
 
     dfs(tiles[0].tid)
 
-    rs, cs = extent(img)
-    def getpix(r, c):
-        if (r, c) in img:
-            return img[(r, c)]
-        else:
-            1/0
-            return '?'
-
-    if PART_1:
-        ids = {pos: idnum for (idnum, pos) in positions.items()}
-        rmin = min(rs)
-        rmax = max(rs) - 9
-        cmin = min(cs)
-        cmax = max(cs) - 9
-        rs2 = [rmin, rmax]
-        cs2 = [cmin, cmax]
-        res = 1
-        for pos in itertools.product(rs2, cs2):
-            res *= ids[pos]
-        print(res == ans)
-    else:
-        imglines = []
-        for y, r in enumerate(rs):
-            if y % 10 in [0, 9]:
-                continue
-            else:
-                line = ''
-                for x, c in enumerate(cs):
-                    if x % 10 in [0, 9]:
-                        pass
-                    else:
-                        line += getpix(r,c)
-            imglines.append(line)
-        for line in imglines:
-            print(line)
+    return img, positions
 
 def get_placement(u, parent, tiles, positions, img):  #TODO requires a lot of state passed around!
     u = get_tile(u, tiles)
@@ -129,4 +88,4 @@ def orientations(lines):
         yield lines
         yield fliphorz(lines)
 
-main() # if __name__ == '__main__' and not sys.flags.inspect: main()
+# main() # if __name__ == '__main__' and not sys.flags.inspect: main()

@@ -3,6 +3,7 @@ import fileinput
 import re
 import sys
 
+# Trailing whitespace inside the string is important!
 monster = """
                   # 
 #    ##    ##    ###
@@ -22,12 +23,17 @@ pattern = interleave(monster)
 regex = re.compile(pattern)
 
 
-# f = open(sys.argv[1])
-# # f = open(sys.argv[1] if len(sys.argv) > 1 else 'monsterinput')
-# lines = [l.strip() for l in f.readlines()]
-lines = []
-for line in fileinput.input():
-    lines.append(line.strip())
+def find_monsters_and_roughness(lines):
+    for o in bigoris(lines):
+        # TODO This assumes that only one orientation has monsters
+        found, painted = paintmons(o)
+        if found:
+            roughness = 0
+            for line in painted:
+                for c in line:
+                    if c == '#':
+                        roughness += 1
+            return roughness
 
 def bigoris(m):
     lines = m
@@ -57,14 +63,3 @@ def paintmons(m):
                             newm[y][x] = 'O'
 
     return monsters, newm
-
-for o in bigoris(lines):
-    found, painted = paintmons(o)
-    if found:
-        roughness = 0
-        for line in painted:
-            for c in line:
-                if c == '#':
-                    roughness += 1
-        print(roughness)
-        break
