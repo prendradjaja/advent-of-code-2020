@@ -183,7 +183,7 @@ def main():
 def extent(img):
     rs = [r for (r, c) in img.keys()]
     cs = [c for (r, c) in img.keys()]
-    return [range(min(rs), max(rs)), range(min(cs), max(cs))]
+    return [range(min(rs), max(rs)+1), range(min(cs), max(cs)+1)]
 
 
 
