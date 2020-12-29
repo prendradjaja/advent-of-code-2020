@@ -1,4 +1,5 @@
 from util import consecutives, fliphorz, rotmat
+import fileinput
 import re
 import sys
 
@@ -21,9 +22,12 @@ pattern = interleave(monster)
 regex = re.compile(pattern)
 
 
-f = open(sys.argv[1])
-# f = open(sys.argv[1] if len(sys.argv) > 1 else 'monsterinput')
-lines = [l.strip() for l in f.readlines()]
+# f = open(sys.argv[1])
+# # f = open(sys.argv[1] if len(sys.argv) > 1 else 'monsterinput')
+# lines = [l.strip() for l in f.readlines()]
+lines = []
+for line in fileinput.input():
+    lines.append(line.strip())
 
 def bigoris(m):
     lines = m
