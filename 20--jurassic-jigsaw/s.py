@@ -73,7 +73,7 @@ def main():
         return ''.join(reversed(line))
 
     def place(u, parent):
-        print('finding placement for', u)
+        # print('finding placement for', u)
         u = getbyid(u)
         parent = getbyid(parent)
 
@@ -96,25 +96,30 @@ def main():
         # else: raise Exception("To implement")
 
         if match == psc.bot:
-            pedge = psc.bot
+            pedge = ps.bot
             for lines in oris(u):
                 uedge = iterunplaced(lines, False).top
                 if uedge == pedge:
                     return (r+10, c), lines
         elif match == psc.ri:
-            pedge = psc.ri
+            pedge = ps.ri
             for lines in oris(u):
                 uedge = iterunplaced(lines, False).lef
                 if uedge == pedge:
                     return (r, c+10), lines
         elif match == psc.top:
-            pedge = psc.top
+            pedge = ps.top
             for lines in oris(u):
+                # bla = iterunplaced(lines, False)
                 uedge = iterunplaced(lines, False).bot
                 if uedge == pedge:
+                    # print('top')
+                    # print(uedge)
+                    # print(pedge)
+                    # print(bla)
                     return (r-10, c), lines
         elif match == psc.lef:
-            pedge = psc.lef
+            pedge = ps.lef
             for lines in oris(u):
                 uedge = iterunplaced(lines, False).ri
                 if uedge == pedge:
@@ -134,7 +139,7 @@ def main():
     visited = set()
     def display():
         rs, cs = extent(img)
-        print(rs, cs)
+        # print(rs, cs)
         def getpix(r, c):
             if (r, c) in img:
                 return img[(r, c)]
@@ -154,16 +159,16 @@ def main():
                 for c, ch in enumerate(row):
                     img[(r, c)] = ch
             positions[u] = (0, 0)
-            print('placing first')
-            display()
+            # print('placing first')
+            # display()
             # print(iterbord(tiles[0]))
         else:
             pos, lines = place(u, parent)
             for r, row in enumerate(lines):
                 for c, ch in enumerate(row):
                     img[grid.addvec(pos, (r, c))] = ch
-            print('placing', pos)
-            display()
+            # print('placing', pos)
+            # display()
             positions[u] = pos
 
         visited.add(u)
@@ -171,6 +176,7 @@ def main():
             if v not in visited:
                 dfs(v, u)
     dfs(tiles[0].tid)
+    display()
 
 def extent(img):
     rs = [r for (r, c) in img.keys()]
