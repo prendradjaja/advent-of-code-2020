@@ -21,10 +21,11 @@ def main():
 
 
     visited = set()
+
     def dfs(u, parent=None):
         def visit():
             # Determine this tile's placement
-            if len(visited) == 0:
+            if not parent:
                 pos = (0, 0)
                 lines = get_tile(u, tiles).lines
             else:
@@ -39,11 +40,12 @@ def main():
             positions[u] = pos
 
         visit()
-        visited.add(u)
+        visited.add(u)  # We could just use `positions` as `visited`, but using a separate visited set makes the DFS structure clearer
 
-        for v in sorted(get_neighbors(get_tile(u, tiles), tids_by_border)):
+        for v in sorted(get_neighbors(u, tiles, tids_by_border)):
             if v not in visited:
                 dfs(v, u)
+
     dfs(tiles[0].tid)
 
     rs, cs = extent(img)

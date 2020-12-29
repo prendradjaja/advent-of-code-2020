@@ -36,6 +36,9 @@ def canon(line):
 
 
 def subimage(img, rows, cols):
+    """
+    Does a little bit more than it says on the tin: Also converts from coord-keyed dict to list of rows
+    """
     res = []
     for r in rows:
         line = ''
@@ -55,7 +58,8 @@ def get_borders(lines, canonicalize=False):
         sides = [canon(s) for s in sides]
     return Sides(*sides)
 
-def get_neighbors(tile, tids_by_border):
+def get_neighbors(tid, tiles, tids_by_border):
+    tile = get_tile(tid, tiles)
     bs = get_borders(tile.lines, True)
     res = []
     for b in sorted(bs):
