@@ -9,9 +9,9 @@ import re
 import sys
 
 monster = """
-                  #
+                  # 
 #    ##    ##    ###
- #  #  #  #  #  #""".replace(' ', '.').split('\n')[1:]
+ #  #  #  #  #  #   """.replace(' ', '.').split('\n')[1:]
 
 def interleave(lines):
     """
