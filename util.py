@@ -88,20 +88,25 @@ def findints(s):
     """
     return ints(re.findall('-?\d+', s))
 
-def consecutives(seq, n=2):
+def consecutives(seq, n=2, string=False):
     """
-    >>> [''.join(t) for t in consecutives('abcd')]
+    >>> list(consecutives('abcd'))
+    [('a', 'b'), ('b', 'c'), ('c', 'd')]
+    >>> list(consecutives('abcd', string=True))
     ['ab', 'bc', 'cd']
-    >>> [''.join(t) for t in consecutives('abcd', 3)]
+    >>> list(consecutives('abcd', 3, string=True))
     ['abc', 'bcd']
-    >>> [''.join(t) for t in consecutives('abcd', 5)]  # seq is too short
+    >>> list(consecutives('abcd', 5, string=True))
     []
     """
     prevs = []
     for item in seq:
         prevs.append(item)
         if len(prevs) == n:
-            yield tuple(prevs)
+            if not string:
+                yield tuple(prevs)
+            else:
+                yield ''.join(prevs)
             prevs.pop(0)
 
 def transpose(m):
