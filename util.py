@@ -1,5 +1,6 @@
 import re
 import inspect
+import types
 
 def tee_disableable(*args, **kwargs):
     print(*args, **kwargs) ############### can disable me by commenting out this line
@@ -169,6 +170,26 @@ def ilen_exhaustive(seq):
     for _ in seq:
         count += 1
     return count
+
+def Record(field_names):
+    """
+    Creates a record type. Similar to namedtuple, but with mutability and without ordering.
+
+    >>> Point = Record('x y')
+    >>> a = Point(1, 2)
+    >>> a.x
+    1
+    >>> a.x += 2
+    >>> a.x
+    3
+    """
+    field_names = field_names.split()
+    def constructor(*values):
+        obj = types.SimpleNamespace()
+        for name, value in zip(field_names, values):
+            setattr(obj, name, value)
+        return obj
+    return constructor
 
 # enumerate
 # ascii_lowercase ascii_lowercase
