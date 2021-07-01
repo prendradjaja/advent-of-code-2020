@@ -134,6 +134,7 @@ def fliphorz(m):
 def rotmat(original):
     """
     Rotate clockwise
+
     >>> rotmat([[1, 2], [3, 4]])
     [(3, 1), (4, 2)]
     """
@@ -141,6 +142,8 @@ def rotmat(original):
 
 def one(seq, only=True):
     """
+    Return the only element of a one-item sequence.
+
     >>> one([2])
     2
     >>> one({2})
@@ -150,6 +153,11 @@ def one(seq, only=True):
     >>> one('22')
     Traceback (most recent call last):
     AssertionError: Not length 1: 22
+
+    This can also be used to return an arbitrary item from a multi-item
+    sequence. The main use case for this is taking an arbitrary item from a
+    set. The same can be accomplished with next(iter(my_set))
+
     >>> one([2, 3], only=False)
     2
     """
