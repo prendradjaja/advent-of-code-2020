@@ -139,7 +139,7 @@ def rotmat(original):
     """
     return list(zip(*original[::-1]))
 
-def one(seq):
+def one(seq, only=True):
     """
     >>> one([2])
     2
@@ -150,8 +150,11 @@ def one(seq):
     >>> one('22')
     Traceback (most recent call last):
     AssertionError: Not length 1: 22
+    >>> one([2, 3], only=False)
+    2
     """
-    assert len(seq) == 1, f'Not length 1: {seq}'
+    if only:
+        assert len(seq) == 1, f'Not length 1: {seq}'
     for item in seq:
         return item
 
