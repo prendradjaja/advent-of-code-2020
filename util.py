@@ -171,24 +171,48 @@ def ilen_exhaustive(seq):
         count += 1
     return count
 
-def Record(field_names):
+def Record(arg1, arg2=None):
     """
-    Creates a record type. Similar to namedtuple, but with mutability and without ordering.
+    Record(field_names) -> constructor
+    Record(typename, field_names) -> constructor
+
+    Creates a record type. Similar to namedtuple, but with mutability and
+    WITHOUT ordering.
+
+    TODO: Add destructuring support? Requires ordering.
+
+    typename parameter can be omitted. It does nothing, and is only included
+    so Record is closer to a drop-in replacement for namedtuple.
 
     >>> Point = Record('x y')
     >>> a = Point(1, 2)
     >>> a.x
     1
-    >>> a.x += 2
+    >>> a.x += 10
     >>> a.x
+    11
+
+    >>> Point2 = Record('Point2', 'x y')
+    >>> b = Point2(3, 4)
+    >>> b.x
     3
+    >>> b.x += 10
+    >>> b.x
+    13
     """
+
+    if arg2:
+        field_names = arg2
+    else:
+        field_names = arg1
     field_names = field_names.split()
+
     def constructor(*values):
         obj = types.SimpleNamespace()
         for name, value in zip(field_names, values):
             setattr(obj, name, value)
         return obj
+
     return constructor
 
 # enumerate
