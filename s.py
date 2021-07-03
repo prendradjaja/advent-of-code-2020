@@ -4,7 +4,8 @@ from util import *
 
 def main():
     f = open(sys.argv[1] if len(sys.argv) > 1 else 'in')
-    for line in f:
-        line = line.strip()
+    lines = [l.rstrip('\n') for l in f]
+    for line in lines:
+        pass
 
 main() # if __name__ == '__main__' and not sys.flags.inspect: main()
