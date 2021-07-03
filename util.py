@@ -182,6 +182,15 @@ def ilen_exhaustive(seq):
         count += 1
     return count
 
+# SimpleNamespace can be used similarly to objects in JavaScript: Set
+# attribute names and values on the fly, and fetch values later with dot
+# notation. This seems to perform somewhat slower than using a Python dict.
+#
+# Example usage:
+#     point = obj(x=1, y=2)
+#     point.x  # -> 1
+obj = types.SimpleNamespace
+
 def Record(arg1, arg2=None):
     """
     Record(field_names) -> constructor
