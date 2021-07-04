@@ -1,6 +1,7 @@
 import re
 import inspect
 import types
+import itertools
 
 def tee_disableable(*args, **kwargs):
     print(*args, **kwargs) ############### can disable me by commenting out this line
@@ -234,6 +235,14 @@ def Record(arg1, arg2=None):
         return obj
 
     return constructor
+
+def nth(iterable, n):
+    '''
+    >>> nth(range(10), 3)
+    3
+    '''
+    return next(itertools.islice(iterable, n, n+1))
+
 
 # enumerate
 # ascii_lowercase ascii_lowercase
