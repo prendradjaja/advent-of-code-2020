@@ -243,6 +243,17 @@ def nth(iterable, n):
     '''
     return next(itertools.islice(iterable, n, n+1))
 
+def strjoin(items, delimiter=' '):
+    '''
+    >>> strjoin([3,4])
+    '3 4'
+    >>> strjoin(range(3))
+    '0 1 2'
+    >>> strjoin(['ab', 'cd'])
+    'ab cd'
+    '''
+    return delimiter.join(str(item) for item in items)
+
 
 # enumerate
 # ascii_lowercase ascii_lowercase
