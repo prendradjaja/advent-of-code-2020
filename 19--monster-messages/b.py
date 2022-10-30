@@ -1,3 +1,23 @@
+'''
+The key thought process for part 2 was:
+
+- Understanding the new rules
+    8: 42 | 42 8
+    11: 42 31 | 42 11 31
+  Notice that 42 and 31 are still finite (they can match a finite set of
+  messages). So, treating 42 and 31 as black boxes: Rule 8 means "42 at least
+  once". Rule 11 means "42 at least once, then 31 at least once (but exactly
+  the same number of times as 42)".
+
+- Understanding rule 0
+    0: 8 11
+  This means "42 at least once, then 31 at least once (but 42 must appear more
+  times than 31)".
+
+- We can't just use a regex anymore for rules 8 and 11 (and therefore 0), but
+  we still can for 42 and 31 and everything else.
+'''
+
 import sys
 import re
 import functools
